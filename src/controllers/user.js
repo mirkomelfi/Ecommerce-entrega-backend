@@ -29,7 +29,11 @@ export const updateRol = async (req, res) => {
     const rol = req.body
     
     try {
-        console.log(rol)
+        if (!rol){
+            return res.status(401).send({
+                message: "No ingreso el rol"
+            })
+        }
         const userUpdated= await modifyRol(id, rol.rol)
 
         if (userUpdated!=-1) {

@@ -21,6 +21,11 @@ export const loginUser = async (req, res, next) => {
                 const { email, password } = req.body
                 const userBDD = await findUserByEmail(email)
 
+                if (!email||!password){
+                    return res.status(401).send({
+                        message: "Faltan datos a ingresar"
+                    })
+                }
                 if (userBDD==-1) {
                     // UserBDD no encontrado en mi aplicacion
                     return res.status(401).send({
@@ -70,7 +75,11 @@ export const passwordRecovery= async (req,res) => {
     try {
 
         const { email } = req.body
-        
+        if (!email){
+            return res.status(401).send({
+                message: "Faltan datos a ingresar"
+            })
+        }
         const validEmail= await findUserByEmail(email)
         
         if (validEmail!=-1){
@@ -229,42 +238,6 @@ export const current = async (req, res, next) => {
     })(req, res, next)
 
 };
-
-
-/*
-export const current = async(req,res) =>{
-    try{
-        const user= await currentUser(req)
-        
-        if(user) {
-            return res.send({status:"success",payload:user})
-        }else{
-            return res.status(400).send(`No esta loggeado`)
-        }
-    }catch (error) {
-        res.status(500).send(`Ocurrio un error en Current, ${error}`)
-    }
-
-}*/
-/*
-export const logoutUser = async(req,res) =>{
-    try{
-
-        const user=  req.user//await currentUser(req)
-        //if (user!=-1){
-        if (!user){
-            await modifyConnection(user.id,Date())
-
-            res.clearCookie("jwt")
-            res.status(200).send(`Sesion cerrada`)
-        }else{
-            res.status(400).send(`No esta loggeado`)
-        }
-    }catch (error) {
-        res.status(500).send(`Ocurrio un error en Current, ${error}`)
-    }
-
-}*/
 
 
 export const logoutUser = async (req, res, next) => {

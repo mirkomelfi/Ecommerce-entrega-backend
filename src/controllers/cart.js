@@ -6,8 +6,8 @@ import { currentUser, findUserById, findUsers } from "../services/UserServices.j
 
 export const getCart= async (req, res) => {
     try {
-        const user= req.user//await currentUser(req)
-        console.log(user)
+        const user= req.user
+
         if (user!=-1){
             const cart= await findCartById(user.idCart)
 
@@ -39,7 +39,7 @@ export const getCart= async (req, res) => {
 export const updateProductCart = async (req, res) => {
     try {
         //idCart,idProduct,quantity
-        console.log("addProductCart")
+        
         const user = req.user//await currentUser(req)
         const products= await findProducts()
 

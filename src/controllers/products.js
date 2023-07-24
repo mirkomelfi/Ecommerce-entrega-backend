@@ -8,19 +8,10 @@ import { generateProductErrorInfo } from "../services/errors/info.js";
 
 
 export const addProduct = async (req,res) => {
-    console.log("llego al conroller addprod")
+
     const {title,description,code,price,status,stock,category,thumbnails}= req.body
     //Errores de datos a enviar a mi BDD
     try {
-/*
-        if (!title||!description||!code||!price||!stock||!category||!thumbnails){
-            /*CustomError.createError({
-                name:"Product creation error",
-                cause:generateProductErrorInfo ({title,description,code,price,status,stock,category,thumbnails}),
-                message:"Error Trying to create Product",
-                code:EErrors.INVALID_TYPES_ERROR
-            })
-        }*/
 
         const newProduct = await createProduct(req.body)
         if (typeof newProduct==='object'){
