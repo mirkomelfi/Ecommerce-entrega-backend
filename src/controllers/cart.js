@@ -7,6 +7,7 @@ import { currentUser, findUserById, findUsers } from "../services/UserServices.j
 export const getCart= async (req, res) => {
     try {
         const user= req.user//await currentUser(req)
+        console.log(user)
         if (user!=-1){
             const cart= await findCartById(user.idCart)
 
