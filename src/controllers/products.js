@@ -113,7 +113,7 @@ export const getProductById = async (req, res) => {
     try {
         const product = await findProductById(id)
         if (product!=-1){
-            return res.status(200).send({message:product}) 
+            return res.status(200).send(product) 
         }else{
             return res.status(400).send({message:"Producto no existente"})
         }

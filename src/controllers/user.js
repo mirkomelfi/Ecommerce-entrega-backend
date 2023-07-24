@@ -3,7 +3,7 @@ import { findUsers, createUser, deleteUsers,modifyRol, findUserById,deleteUser }
 export const getUsers = async (req, res) => {
     try {
         const users = await findUsers()
-        res.status(200).send(users)
+       return res.status(200).send(users)
 
     } catch (error) {
         res.status(500).send(error)
@@ -15,9 +15,9 @@ export const getUserById = async (req, res) => {
     try {
         const user= await findUserById(id)
         if (user){
-            res.status(200).send(user)
+            return res.status(200).send(user)
         }
-        res.status(400).send({message:"User not found",status:400})
+        return res.status(400).send({message:"User not found",status:400})
 
     } catch (error) {
         res.status(500).send(error)
