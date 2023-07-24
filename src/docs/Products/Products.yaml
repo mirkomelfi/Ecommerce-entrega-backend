@@ -1,0 +1,239 @@
+paths:
+  /api/products/:
+    get:
+      summary: "Consulta todos los productos"
+      tags:
+        - Products
+      responses:
+        "200":
+          description: "Productos encontrados"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Product"
+        "500":
+          description: "Error del servidor al obtener los productos"
+    post:
+      summary: "Crear producto"
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/createProduct"
+      responses:
+        "200":
+          description: "Producto creado"
+        "401":
+          description: "Error de roles"
+        "500":
+          description: "Error del servidor al agregar el producto"
+  /api/products/{pid}:
+    get:  
+      summary: "Consultar un producto dado su id"
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: "Id del producto solicitado"
+        schema: 
+          $type: String
+      responses:
+        "200":
+          description: "Producto encontrado"
+        "400":
+          description: "Error al intentar buscar"
+        "401":
+          description: "Error de loggeo/roles"
+        "500":
+        description: "Error de servidor"
+    put:
+      summary: "Actualizar un producto"
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: "Id del producto solicitado"
+        schema: 
+          $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateProduct"
+      responses:
+        "200":
+          description: "Producto actualizado"
+        "400":
+          description: "Error al intentar actualizar"
+        "401":
+          description: "Error de loggeo/roles"
+        "500":
+          description: "Error del servidor al actualizar el producto"
+    delete:
+      summary: "Eliminar un producto"
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: "Id del producto solicitado"
+        schema: 
+          $type: String
+      responses:
+        "200":
+          description: "Producto eliminado"
+        "400":
+          description: "Error al intentar eliminar"
+        "401":
+          description: "Error de loggeo/roles"
+        "500":
+          description: "Error del servidor al eliminar el producto"    
+  
+
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: "Id autogenerado"
+        title:
+          type: String
+          description: "Nombre del Producto"
+        description:
+          type: String
+          description: "Descripcion del Producto"
+        code:
+          type: String
+          description: "Codigo de barras del Producto"
+        price:
+          type: Number
+          description: "Precio del Producto"
+        status:
+          type: Boolean
+          description: "Estado del Producto"
+        owner:
+          type: String
+          description: "Creador del Producto"
+        stock:
+          type: Number
+          description: "Cantidad de stock del Producto"
+        category:
+          type: String
+          description: "Categoria del Producto"
+        thumbnails:
+          type: Array
+          description: "Imagenes del Producto"
+      example:
+        _id: ObjectId("12bb12bb12bb12bb12bb12bb")
+        title: "Libro"
+        description: "Libro de ficcion de los 90"
+        code: "1hda1fe1as1"
+        price: 3453
+        status: true
+        owner: ObjectId("13bb13bb13bb13bb13bb13bb")
+        stock: 53
+        category: "Entretenimiento"
+        thumbnails: ["libro1.jpg"]
+  requestBodies:
+    createProduct:
+      type: object
+      properties:
+        title:
+          type: String
+          description: "Nombre del Producto"
+        description:
+          type: String
+          description: "Descripcion del Producto"
+        code:
+          type: String
+          description: "Codigo de barras del Producto"
+        price:
+          type: Number
+          description: "Precio del Producto"
+        status:
+          type: Boolean
+          description: "Estado del Producto"
+        owner:
+          type: String
+          description: "Creador del Producto"
+        stock:
+          type: Number
+          description: "Cantidad de stock del Producto"
+        category:
+          type: String
+          description: "Categoria del Producto"
+        thumbnails:
+          type: Array
+          description: "Imagenes del Producto"
+      example:
+        title: "Libro"
+        description: "Libro de ficcion de los 90"
+        code: "1hda1fe1as1"
+        price: 3453
+        status: true
+        owner: ObjectId("13bb13bb13bb13bb13bb13bb")
+        stock: 53
+        category: "Entretenimiento"
+        thumbnails: ["libro1.jpg"]
+    updateProduct:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: "Id autogenerado"
+        title:
+          type: String
+          description: "Nombre del Producto"
+        description:
+          type: String
+          description: "Descripcion del Producto"
+        code:
+          type: String
+          description: "Codigo de barras del Producto"
+        price:
+          type: Number
+          description: "Precio del Producto"
+        status:
+          type: Boolean
+          description: "Estado del Producto"
+        owner:
+          type: String
+          description: "Creador del Producto"
+        stock:
+          type: Number
+          description: "Cantidad de stock del Producto"
+        category:
+          type: String
+          description: "Categoria del Producto"
+        thumbnails:
+          type: Array
+          description: "Imagenes del Producto"
+      example:
+        _id: ObjectId("12bb12bb12bb12bb12bb12bb")
+        title: "Libro"
+        description: "Libro de ficcion de los 90"
+        code: "1hda1fe1as1"
+        price: 3453
+        status: true
+        owner: ObjectId("13bb13bb13bb13bb13bb13bb")
+        stock: 53
+        category: "Entretenimiento"
+        thumbnails: ["libro1.jpg"]
+
+
+
+

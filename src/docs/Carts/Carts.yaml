@@ -1,0 +1,178 @@
+paths:
+  /api/carts/:
+    get:  
+      summary: "Consultar el carrito del usuario loggeado"
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: "Carrito encontrado"
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#components/schemas/Cart" 
+        "400":
+          description: "Carrito no encontrado"
+        "401":
+          description: "Error de loggeo/roles"
+        "500":
+          description: "Error de servidor"
+    post:  
+      summary: "Comprar el carrito del usuario loggeado"
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: "Carrito Comprado"
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#components/schemas/Cart" 
+        "400":
+          description: "Error en la compra"
+        "401":
+          description: "Error de loggeo/roles"
+        "500":
+          description: "Error de servidor"
+    put:
+      summary: "Actualizar un producto"
+      tags:
+        - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateProductsCart"
+      responses:
+        "200":
+          description: "Carrito actualizado"
+        "400":
+          description: "Error al intentar actualizar"
+        "401":
+          description: "Error de loggeo/roles"
+        "500":
+          description: "Error del servidor al actualizar el Carrito"
+    delete:
+      summary: "Eliminar todo del carrito"
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: "Productos eliminados del carrito"
+        "400":
+          description: "Error al intentar eliminar carrito"
+        "401":
+          description: "Error de loggeo/roles"
+        "500":
+          description: "Error del servidor al eliminar el carrito"    
+  /api/carts/product/{pid}:
+    post:  
+      summary: "Agregar de a 1 al carrito"
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: "Carrito actualizado"
+        "400":
+          description: "Error en la operacion"
+        "401":
+          description: "Error de loggeo/roles"
+        "500":
+          description: "Error de servidor"
+    put:
+      summary: "Actualizar X cantidad de un producto"
+      tags:
+        - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateProductQuantity"
+      responses:
+        "200":
+          description: "Carrito actualizado"
+        "400":
+          description: "Error al intentar actualizar"
+        "401":
+          description: "Error de loggeo/roles"
+        "500":
+          description: "Error del servidor al actualizar el Carrito"
+    delete:
+      summary: "Eliminar un producto X del carrito"
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: "Id del producto a eliminar"
+        schema: 
+          $type: String
+      responses:
+        "200":
+          description: "Producto eliminado"
+        "400":
+          description: "Error al intentar eliminar"
+        "401":
+          description: "Error de loggeo/roles"
+        "500":
+          description: "Error del servidor al eliminar el producto"    
+
+
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: "Id autogenerado"
+        products:
+          type: Array
+          properties: 
+            productId:
+              type: Schema.Types.ObjectId
+              description: "Id de referencia del producto"
+            quantity:
+              type: Number
+              description: "Cantidad del producto agregada al carrito"
+      example:
+        _id: ObjectId("12bb12bb12bb12bb12bb12bb")
+        products: [{
+          productId: ObjectId("13bb13bb12cc13bb13bb13bb"),
+          quantity: 14
+        }]
+  requestBodies:
+    updateProductQuantity:
+      type: object
+      properties:
+        quantity:
+          type: Number
+          description: "Cantidad que desea agregar al carrito"
+      example:
+        quantity: 27
+    updateProductsCart:
+      type: Array
+      properties: 
+        productId:
+          type: String
+          description: "Id del producto"
+        quantity:
+          type: Number
+          description: "Cantidad del producto a agregar al carrito"
+      example:
+        products: [{
+          productId: ObjectId("13bb13bb12cc13bb13bb13bb"),
+          quantity: 14},
+          {
+          productId: ObjectId("13bb13bb12cc13bb13bb13bb"),
+          quantity: 14
+        }]
+        
