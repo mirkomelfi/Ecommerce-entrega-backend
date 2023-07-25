@@ -36,8 +36,6 @@ export const updateRol = async (req, res) => {
         }
 
         if (rol.rol!="User"&&rol.rol!="Admin"){
-            console.log(rol.rol)
-            console.log("User")
             return res.status(401).send({
                 message: "Rol invalido: User o Admin"
             })

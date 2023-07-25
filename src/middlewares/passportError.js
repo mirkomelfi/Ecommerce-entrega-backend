@@ -9,7 +9,7 @@ export const passportError = (strategy) => {
                     message: "Error de JWT" 
                 });;
             }
-            console.log(user)
+
             if (!user) {
                 return res.status(401).send({ 
                     message: "No hay usuario logeado" 

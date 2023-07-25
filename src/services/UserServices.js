@@ -111,7 +111,6 @@ export const currentUser = async (req) => {
     try {
         const cookie = req.cookies.jwt||req.headers.authorization
         if (cookie){
-            console.log(cookie,"currenuser")
             const user = jwt.verify(cookie,process.env.JWT_SECRET);
             if (user){
                 return await userModel.findById(user.user.id)

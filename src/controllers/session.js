@@ -15,7 +15,7 @@ export const loginUser = async (req, res, next) => {
             if (err) {
                 return res.status(401).send("Error en consulta de token")
             }
-            console.log(user)
+
             if (!user) {
                 //El token no existe, entonces consulto por el usuario
                 const { email, password } = req.body

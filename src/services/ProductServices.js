@@ -3,24 +3,30 @@ import {faker} from "@faker-js/faker"
 
 export const findProducts = async (params) => {
     try {
-        const products = await productModel.find()
-/*
+
         let {limit,page,sort,category}=params
-        if (category){
-            if (sort==="1"||sort==="-1"){
-                return await productModel.paginate({category},{sort:{price:parseInt(sort)},limit:limit||10,page:page||1})
+        console.log(params)
+        if (!limit&&!page&&!sort&&!category){
+
+            if (category){
+                if (sort==="1"||sort==="-1"){
+                    return await productModel.paginate({category},{sort:{price:parseInt(sort)},limit:limit||10,page:page||1})
+                }else{
+                    return await productModel.paginate({category},{limit:limit||10,page:page||1})
+                }
             }else{
-                return await productModel.paginate({category},{limit:limit||10,page:page||1})
-            }
-        }else{
-            if (sort==="1"||sort==="-1"){
-                return await productModel.paginate({},{sort:{price:parseInt(sort)},limit:limit||10,page:page||1})
-            }else{
-                return await productModel.paginate({},{limit:limit||10,page:page||1})
+                if (sort==="1"||sort==="-1"){
+                    return await productModel.paginate({},{sort:{price:parseInt(sort)},limit:limit||10,page:page||1})
+                }else{
+                    return await productModel.paginate({},{limit:limit||10,page:page||1})
+                }
             }
         }
-*/
-        return products
+        else{
+            const products = await productModel.find()
+            return products
+        }
+
     } catch (error) {
         throw new Error(error)
     }
@@ -92,8 +98,7 @@ export const modifyProduct = async (idProduct, product,productsExistentes) => {
             }
         
             const productExists= await findProductByCode(code)
-            //console.log(productExists.id)
-            //console.log(idProduct)
+
             if (productExists&&productExists.id!=idProduct){
                 return "Error. Esta intentando utilizar un codigo ya utilizado por otro producto"
             }else{

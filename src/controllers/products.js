@@ -36,9 +36,9 @@ export const updateProduct = async (req, res) => {
     const product = req.body
     
     try {
-        const products= await findProducts()
+        const products= await findProducts(req.params)
 
-        const newProduct = await modifyProduct(id, product, products)
+        const newProduct = await modifyProduct(id, product, products.docs)
 
         if (typeof newProduct==='object') {
             return res.status(200).json({
@@ -68,9 +68,9 @@ export const deleteProduct = async (req, res) => {
 
     try {
 
-        const products= await findProducts()
+        const products= await findProducts(req.params)
 
-        const product = await removeProduct(id,products)
+        const product = await removeProduct(id,products.docs)
         
         if (product!=-1) {
             return res.status(200).json({
@@ -94,9 +94,9 @@ export const deleteProduct = async (req, res) => {
 export const getProducts = async (req, res) => {
     try {
         
-        const products = await findProducts(req.query)
+        const products = await findProducts(req.params)
 
-        if (products.length!==0){
+        if (products.docs.length!==0){
             res.status(200).send(products) 
         }else{
             res.status(400).send("No hay productos")
@@ -120,7 +120,6 @@ export const getProductById = async (req, res) => {
       
 
     } catch (error) {
-        console.log(error)
         res.status(500).send(error)
     }
 

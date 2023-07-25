@@ -41,12 +41,14 @@ export const updateProductCart = async (req, res) => {
         //idCart,idProduct,quantity
         
         const user = req.user//await currentUser(req)
-        const products= await findProducts()
 
+        const products= await findProducts(req.params)
+ 
         const {pid}= req.params
         const {quantity}= req.body
 
-        const cart = await addProductToCart(user.idCart,products,pid,quantity)
+        const cart = await addProductToCart(user.idCart,products.docs,pid,quantity)
+
 
         if (cart!=-1){
             
@@ -73,11 +75,11 @@ export const addProductCart = async (req, res) => {
 
         const {pid}= req.params
 
-        const products= await findProducts()
+        const products= await findProducts(req.params)
 
         const user = req.user//await currentUser(req)
 
-        const cart = await addProductToCartTESTSer(user.idCart,products,pid)
+        const cart = await addProductToCartTESTSer(user.idCart,products.docs,pid)
         if (cart!=-1){
             res.status(200).json({
                 message: "Producto agregado al carrito",
@@ -99,7 +101,7 @@ export const updateProductsCart = async (req, res) => {
         //idCart,idProduct,quantity
 
         const user = req.user//await currentUser(req)
-        const products= await findProducts()
+        const products= await findProducts(req.params)
         const newCart=req.body
         
         if (! Array.isArray(newCart)){
@@ -108,7 +110,7 @@ export const updateProductsCart = async (req, res) => {
                 message: "Se solicita array de objetos cuyos atributos sean: productId y quantity",
             })
         }
-        const cart = await updateProductsCartSER(user.idCart,products,newCart)
+        const cart = await updateProductsCartSER(user.idCart,products.docs,newCart)
         if (cart==-1){
             res.status(401).json({
                 message: "No se realizaron cambios en el carrito. Fijese si los datos ingresados son validos (Se solicita array de objetos cuyos atributos sean: productId y quantity)",
@@ -170,10 +172,12 @@ export const removeProductCart = async (req, res) => {
     try {
         const user = req.user//await currentUser(req)
         if (user!=-1){
-            const products= await findProducts()
+
+            const products= await findProducts(req.params)
+
             const {pid}= req.params
 
-            const cart = await deleteProductCart(user.idCart,products,pid)
+            const cart = await deleteProductCart(user.idCart,products.docs,pid)
 
             if (cart!=-1){
                 res.status(200).json({
