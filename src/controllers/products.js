@@ -94,12 +94,12 @@ export const deleteProduct = async (req, res) => {
 export const getProducts = async (req, res) => {
     try {
         
-        const products = await findProducts(req.params)
+        const products = await findProducts(req.query)
 
-        if (products.docs.length!==0){
-            res.status(200).send(products) 
+        if (products){
+            return res.status(200).send(products) 
         }else{
-            res.status(400).send("No hay productos")
+            return res.status(400).send("No hay productos")
         }
 
     } catch (error) {

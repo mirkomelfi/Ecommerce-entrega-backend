@@ -5,8 +5,8 @@ export const findProducts = async (params) => {
     try {
 
         let {limit,page,sort,category}=params
-        console.log(params)
-        if (!limit&&!page&&!sort&&!category){
+
+        if (limit||page||sort||category){
 
             if (category){
                 if (sort==="1"||sort==="-1"){
@@ -23,8 +23,7 @@ export const findProducts = async (params) => {
             }
         }
         else{
-            const products = await productModel.find()
-            return products
+            return await productModel.paginate({},{limit:limit||10,page:page||1})
         }
 
     } catch (error) {
