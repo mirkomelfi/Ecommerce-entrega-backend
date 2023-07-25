@@ -34,6 +34,14 @@ export const updateRol = async (req, res) => {
                 message: "No ingreso el rol"
             })
         }
+
+        if (rol.rol!="User"&&rol.rol!="Admin"){
+            console.log(rol.rol)
+            console.log("User")
+            return res.status(401).send({
+                message: "Rol invalido: User o Admin"
+            })
+        }
         const userUpdated= await modifyRol(id, rol.rol)
 
         if (userUpdated!=-1) {
@@ -42,7 +50,7 @@ export const updateRol = async (req, res) => {
             })
         }else{
             res.status(400).json({
-                message: userUpdated
+                message: "Usuario no existente"
             })
         }
 

@@ -99,7 +99,8 @@ export const passwordRecovery= async (req,res) => {
             
             })
 
-            let url= `${process.env.DOMINIO_BACK}/api/session/newPass`
+            let url_back= `${process.env.DOMINIO_BACK}/api/session/newPass`
+            let url_front= `${process.env.DOMINIO_FRONT}/newpassword`
 
             await transporter.sendMail({
                 from: 'Test Coder mirkomelfi123@gmail.com',
@@ -107,7 +108,8 @@ export const passwordRecovery= async (req,res) => {
                 subject: "Mail de recuperacion de contraseña",
                 html: `
                     <div>
-                        <h2> ${url} </h2>
+                        <h2> URL POSTMAN: ${url_back} </h2>
+                        <h2> URL REACT: ${url_front} </h2>
                     </div>
                 `,
                 attachments: []
