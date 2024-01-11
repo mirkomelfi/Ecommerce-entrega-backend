@@ -42,7 +42,7 @@ export const loginUser = async (req, res, next) => {
 
                 // Ya que el usuario es valido, genero un nuevo token
                 const token = jwt.sign({ user: { id: userBDD._id } }, process.env.JWT_SECRET,{ expiresIn: '3h' })
-                res.cookie('jwt', token,{ httpOnly: true, maxAge: 3 * 60 * 60 * 1000 })
+                res.cookie('jwt', token,{ secure: true,httpOnly: true, maxAge: 3 * 60 * 60 * 1000,path:"/" })
         
                 await modifyConnection(userBDD.id,Date())
 
@@ -114,7 +114,7 @@ export const passwordRecovery= async (req,res) => {
                 `,
                 attachments: []
             })
-            res.cookie("cookie cookie","cookie password",{maxAge:60*60*1000,signed:true})
+            res.cookie("cookie cookie","cookie password",{secure:true,maxAge:60*60*1000,signed:true})
             return res.status(200).send({
                 message: "Email enviado"
             })
@@ -190,7 +190,7 @@ export const registerUser = async (req, res) => {
 
                 const token = jwt.sign({ user: { id: newUser._id } }, process.env.JWT_SECRET,{ expiresIn: '3h' })
 
-                res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 60 * 60 * 1000 })
+                res.cookie('jwt', token, { secure:true,httpOnly: true, maxAge: 3 * 60 * 60 * 1000 })
                 res.status(200).json({ token });
             }
 
