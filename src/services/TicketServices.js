@@ -59,7 +59,7 @@ export const createTicket = async (cart,email) => {
         await newTicket.save()
         
         await transporter.sendMail({
-            from: 'Test Coder mirkomelfi123@gmail.com',
+            from: 'Ecommerce Adiestramiento mirkomelfi123@gmail.com',
             to: email,
             subject: "Mail de su compra",
             html: `
