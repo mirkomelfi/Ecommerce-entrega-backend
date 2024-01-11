@@ -42,7 +42,7 @@ export const loginUser = async (req, res, next) => {
 
                 // Ya que el usuario es valido, genero un nuevo token
                 const token = jwt.sign({ user: { id: userBDD._id } }, process.env.JWT_SECRET,{ expiresIn: '3h' })
-                res.cookie('jwt', token,{ secure: true,httpOnly: true, maxAge: 3 * 60 * 60 * 1000,path:"/" })
+                res.cookie('jwt', token,{ secure: true,sameSite:"none",httpOnly: true, maxAge: 3 * 60 * 60 * 1000,path:"/" })
         
                 await modifyConnection(userBDD.id,Date())
 
@@ -263,7 +263,7 @@ export const logoutUser = async (req, res, next) => {
 
             await modifyConnection(decodedToken.user.id,Date())
 
-            res.clearCookie('jwt');
+            res.clearCookie('jwt', {secure:true,sameSite:"none",httpOnly: true, maxAge: 3 * 60 * 60 * 1000,path:"/"});
             res.status(200).json({
                 status: "success",
                 message: 'Sesión cerrada exitosamente' 
