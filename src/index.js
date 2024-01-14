@@ -6,6 +6,7 @@ import router from './routes/index.js'
 import passport from 'passport'
 import initializePassport from './config/passport.js'
 import cors from 'cors'
+import mercadopago from 'mercadopago'
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUiExpress from 'swagger-ui-express'
 import errorHandler from "./services/errors/index.js"
@@ -27,6 +28,10 @@ const corsOptions = { //Reviso si el cliente que intenta ingresar a mi servidor 
 }
 
 const app = express()
+
+// REPLACE WITH YOUR ACCESS TOKEN AVAILABLE IN: https://developers.mercadopago.com/panel
+
+
 
 app.use(express.json())
 app.use(cors(corsOptions))
